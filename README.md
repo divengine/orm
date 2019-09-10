@@ -59,7 +59,13 @@ Now look at an example of how to use your model:
 ```php
 <?php
 
+use divengine\orm;
+
+$pdo = new PDO();
+orm::connectGlobal($pdo);
+
 $person = new Person(['name' => 'Peter']);
+// $person::connect($pdo); 
 $person->insert();
 
 $list = new PersonCollection();
