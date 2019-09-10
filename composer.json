@@ -1,0 +1,24 @@
+{
+  "name": "divengine/orm",
+  "license": "GPL-3.0-or-later",
+  "description": "Div PHP Object Relational Mapping",
+  "keywords": [
+    "ORM",
+    "DAO",
+    "ADO",
+    "ActiveRecord",
+    "DAL"
+  ],
+  "homepage": "https://divengine.com/orm",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=7.1.0",
+    "ext-json": "*",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "divengine\\": "src/"
+    }
+  }
+}
