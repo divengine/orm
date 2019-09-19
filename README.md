@@ -1,4 +1,4 @@
-﻿# Div PHP Object Relational Mapping 0.1.0
+﻿# Div PHP Object Relational Mapping 0.2.0
 
 This class allow to you make a mapping between your database objects and
 your PHP objects.
@@ -61,8 +61,8 @@ Now look at an example of how to use your model:
 
 use divengine\orm;
 
-$pdo = new PDO();
-orm::connectGlobal($pdo);
+$pdo = new PDO(); // or use orm::buildPDO();
+orm::connectGlobal($pdo); // or pass true to second param of orm::buildPDO()
 
 $person = new Person(['name' => 'Peter']);
 // $person::connect($pdo); 

@@ -291,6 +291,27 @@ class orm
     }
 
     /**
+     * Build PDO object
+     *
+     * @param  mixed    $data
+     *
+     * @param bool $connectGlobal
+     *
+     * @return PDO
+     */
+    public static function buildPDO($data, $connectGlobal = false): PDO
+    {
+        $pdo = new PDO("{$data["type"]}:host={$data["host"]};port={$data["port"]};dbname={$data["name"]};", $data['user'], $data['pass']);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        if ($connectGlobal) {
+            self::connectGlobal($pdo);
+        }
+
+        return $pdo;
+    }
+
+    /**
      * Connect to database
      *
      * @param PDO $pdo
@@ -733,6 +754,26 @@ class orm
     }
 
     /**
+     * Build a INSERT query
+     *
+     * @param      $table
+     * @param      $data
+     * @param null $returning
+     *
+     * @return string
+     */
+    public function buildQueryInsert($table, $data, $returning = null)
+    {
+        $columns = array_keys($data);
+        $values = ':'.implode(",:", $columns);
+        $columns = implode(',', $columns);
+
+        $sql = "INSERT INTO {$table} ($columns) VALUES ($values) ".($returning === null ? "" : " RETURNING $returning ").";";
+
+        return $sql;
+    }
+
+    /**
      * Add/insert object
      *
      * @param object $obj
@@ -784,6 +825,7 @@ class orm
         $s_values = str_repeat('?,', $values_count - 1).'?';
 
         // build the query
+        // TODO: build query with $this->buildQueryInsert
         $sql = "INSERT INTO {$this->getMapName()} (".implode(',', array_keys($values)).") VALUES ($s_values) RETURNING *;";
 
         $st = $this->db()->prepare($sql);
@@ -948,8 +990,9 @@ class orm
             $paramsX = $this->getRawData();
             $params = [];
             foreach ($paramsX as $p => $v) {
-                if (stripos($filter,':'.$p) !== false)
+                if (stripos($filter, ':'.$p) !== false) {
                     $params[$p] = $v;
+                }
             }
         }
 
@@ -1133,7 +1176,8 @@ class orm
      * @return bool
      * @throws \ReflectionException
      */
-    public function exists($filters, $params, &$firstItem = null): bool {
+    public function exists($filters, $params, &$firstItem = null): bool
+    {
 
         if ($this->__map_type === self::RECORD) {
             // TODO: search inside record ?
