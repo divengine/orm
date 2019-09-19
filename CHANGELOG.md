@@ -1,7 +1,8 @@
 September 18, 2019
 - release 0.2.0 version
 - New method for build a PDO instances, orm::buildPDO($config, $connectGlobal);
-This code build PDO, and make global connection
+
+This example build a PDO instance, and make a global connection:
 
 ```php
 <?php
