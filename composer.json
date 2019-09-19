@@ -6,11 +6,11 @@
     "ORM",
     "DAO",
     "ADO",
-    "ActiveRecord",
+    "Active Record",
     "DAL"
   ],
   "homepage": "https://divengine.com/orm",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "require": {
     "php": ">=7.1.0",
     "ext-json": "*",

@@ -1,4 +1,5 @@
 September 18, 2019
+- release 1.0.0 version
 - release 0.2.0 version
 - New method for build a PDO instances, orm::buildPDO($config, $connectGlobal);
 

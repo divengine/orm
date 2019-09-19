@@ -1,4 +1,4 @@
-﻿# Div PHP Object Relational Mapping 0.2.0
+﻿# Div PHP Object Relational Mapping 1.0.0
 
 This class allow to you make a mapping between your database objects and
 your PHP objects.

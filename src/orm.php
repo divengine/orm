@@ -19,7 +19,7 @@
  *
  * @package divengine/orm
  * @author  Rafa Rodriguez @rafageist [https://rafageist.github.io]
- * @version 0.1.0
+ * @version 1.0.0
  *
  * @link    https://divengine.com/orm
  * @link    https://github.com/divengine/orm
@@ -70,7 +70,7 @@ class orm
      *
      * @var string
      */
-    private static $__version = '0.1.0';
+    private static $__version = '1.0.0';
 
     /** @var PDO Global PDO connection for all instances of ORM or their children */
     private static $__pdo_global;
