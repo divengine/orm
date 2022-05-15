@@ -81,6 +81,4 @@ Enjoy!
 
 @rafageist
 
-Eng. Rafa Rodriguez
-
-https://rafageist.github.io
+https://rafageist.com
