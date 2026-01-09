@@ -96,7 +96,7 @@ class orm
     /** @var PDO Database connection with PDO */
     private $__pdo;
 
-    /** @var PDOStatement */
+    /** @var PDOStatement|null */
     private $__last_statement;
 
     protected static $__meta_query_processor;
@@ -324,9 +324,9 @@ class orm
     /**
      * Get last PDO statement
      *
-     * @return PDOStatement
+     * @return ?PDOStatement
      */
-    public function getLastStatement(): PDOStatement
+    public function getLastStatement(): ?PDOStatement
     {
         return $this->__last_statement;
     }
@@ -964,9 +964,9 @@ class orm
      *
      * @param $v
      *
-     * @return bool
+     * @return string
      */
-    public function strBool($v): bool
+    public function strBool($v): string
     {
         if ($v === null || $v === false) {
             return 'false';
@@ -1160,7 +1160,16 @@ class orm
 
         $rawData = [];
         $this->each(function ($item) use (&$rawData) {
-            $rawData[] = $this->getData(false);
+            if (is_object($item)) {
+                if (method_exists($item, 'getData')) {
+                    $rawData[] = $item->getData(false);
+                    return;
+                }
+                $rawData[] = self::getPublicData($item);
+                return;
+            }
+
+            $rawData[] = $item;
         });
 
         return $rawData;

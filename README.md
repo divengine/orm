@@ -1,14 +1,26 @@
-﻿# Div PHP Object Relational Mapping 1.0.0
+# Div PHP ORM
 
-This class allow to you make a mapping between your database objects and
-your PHP objects.
+Div PHP ORM is a lightweight, class-based ORM that maps database rows to PHP
+objects using inheritance and reflection. It is designed for small projects
+where you want explicit mappings without a large framework.
 
-You can implement your model inheriting from divengine\orm. Look at the 
-following example as it implements a hierarchy of classes (scheme, map, 
-collection, entitlement) and all inherit from the same divengine\orm class.
+## Requirements
+
+- PHP 8.0 or higher
+- ext-pdo, ext-json
+
+## Installation
+
+```shell
+composer require divengine/orm
+```
+
+## Quick start
 
 ```php
 <?php
+
+require 'vendor/autoload.php';
 
 use divengine\orm;
 
@@ -26,59 +38,37 @@ class PersonMap extends PublicMap
     protected $__map_class = Person::class;
 }
 
-class Person extends PersonMap {
-
-    private $id = self::AUTOMATIC;
-    private $name;
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-   
-    public function setName($name) {
-        $this->name = $name;
-    }
-   
+class Person extends PersonMap
+{
+    public $id = self::AUTOMATIC;
+    public $name;
 }
 
-class PersonCollection extends PersonMap {
+class PersonCollection extends PersonMap
+{
     protected $__map_type = self::TABLE;
 }
 
-```
-
-Now look at an example of how to use your model:
-```php
-<?php
-
-use divengine\orm;
-
-$pdo = new PDO(); // or use orm::buildPDO();
-orm::connectGlobal($pdo); // or pass true to second param of orm::buildPDO()
+$pdo = orm::buildPDO([
+    'type' => 'pgsql',
+    'host' => 'localhost',
+    'port' => 5432,
+    'name' => 'mydb',
+    'user' => 'me',
+    'pass' => 'secret'
+], true);
 
 $person = new Person(['name' => 'Peter']);
-// $person::connect($pdo); 
 $person->insert();
 
 $list = new PersonCollection();
-$list->addItem($person);
-
-$entity = $list->getFirstItem('id = ?', [100]);
-
+$first = $list->getFirstItem('id = ?', [100]);
 ```
 
-Enjoy!
+## Docs
 
--- 
+See `docs/README.md` for installation, mapping, and usage guides.
 
-@rafageist
+## License
 
-https://rafageist.com
+This project is licensed under the GNU General Public License. See `LICENSE`.
